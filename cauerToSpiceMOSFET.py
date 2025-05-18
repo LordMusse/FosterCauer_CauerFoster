@@ -120,7 +120,7 @@ with open(output_file, "w") as fileobj:
     else:  # Cauer network, as default
         for i in range(stages):
             tmpstring = "C" + str(i+1) + " " + str(i+1) + " " + \
-                        "0 " + str(c_list[i]) + "\n"
+                        "T_Ambient " + str(c_list[i]) + "\n"
             fileobj.write(tmpstring)
             tmpstring = "R" + str(i+1) + " " + str(i+1) + " " + \
                         str(i+2) + " " + str(r_list[i]) + "\n"
