@@ -103,7 +103,7 @@ with open(output_file, "w") as fileobj:
 
     tmpstring = "* Calculation of power dissipated P_D\n"
     fileobj.write(tmpstring)
-    tmpstring = "BI1 T_Ambient T_Junction I=(V(Drain,Source)*I(RsenseDrain) + V(Gate,Source)*I(RsenseGate))\n\n"
+    tmpstring = "BI1 T_Ambient 1 I=(V(Drain,Source)*I(RsenseDrain) + V(Gate,Source)*I(RsenseGate))\n\n"
     fileobj.write(tmpstring)
 
     tmpstring = "*** Thermal Circuit from Junction to Case ***\n"
@@ -126,5 +126,5 @@ with open(output_file, "w") as fileobj:
                         str(i+2) + " " + str(r_list[i]) + "\n"
             fileobj.write(tmpstring)
 
-    tmpstring = ".ENDS transistorThermal\n"
+    tmpstring = "\n.ENDS transistorThermal\n"
     fileobj.write(tmpstring)
