@@ -98,7 +98,12 @@ with open(output_file, "w") as fileobj:
 
     tmpstring = "* Current sense Gate \n"
     fileobj.write(tmpstring)
-    tmpstring = "RsenseGate Gate Gate2 .01m\n\n"
+    tmpstring = "RsenseGate Gate Gate2 1m\n\n"
+    fileobj.write(tmpstring)
+
+    tmpstring = "* Current sense Source (used in SOAtherm but not here) \n"
+    fileobj.write(tmpstring)
+    tmpstring = "RsenseSource Source Source2 .01m\n\n"
     fileobj.write(tmpstring)
 
     tmpstring = "* Calculation of power dissipated P_D\n"
