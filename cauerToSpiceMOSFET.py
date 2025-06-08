@@ -21,6 +21,8 @@ parser.add_argument('input_file', help='specify input filename',
                     action='store', type=str)
 parser.add_argument('output_file', help='specify output filename',
                     action='store', type=str)
+parser.add_argument('junction_to_ambient', help='specify junction to ambient thermal resistance(use dot as decimal divider))',
+                    action='store', type=str)
 parser.add_argument('-f', '--FosterNetwork',
                     help='consider input file as Foster ' +
                     'network. Default: Cauer Network.',
@@ -34,6 +36,7 @@ args = parser.parse_args()
 # Input file and output file:
 input_file = args.input_file
 output_file = args.output_file
+junction_to_ambient = args.junction_to_ambient
 isFoster = args.FosterNetwork
 cauerOrFoster = "FOSTER" if isFoster else "CAUER"
 
@@ -108,10 +111,18 @@ with open(output_file, "w") as fileobj:
 
     tmpstring = "* Calculation of power dissipated P_D\n"
     fileobj.write(tmpstring)
-    tmpstring = "BI1 T_Ambient 1 I=(V(Drain,Source)*I(RsenseDrain) + V(Gate,Source)*I(RsenseGate))\n\n"
+    tmpstring = "BI1 0 1 I=(V(Drain,Source)*I(RsenseDrain) + V(Gate,Source)*I(RsenseGate))\n\n"
     fileobj.write(tmpstring)
 
     tmpstring = "*** Thermal Circuit from Junction to Case ***\n"
+    fileobj.write(tmpstring)
+
+    tmpstring = "** Junction to Ambient **\n"
+    fileobj.write(tmpstring)
+    tmpstring = "Rth 1 T_Ambient " + str(junction_to_ambient) + "\n\n"
+    fileobj.write(tmpstring)
+
+    tmpstring = "** cauer chain **\n"
     fileobj.write(tmpstring)
 
     if isFoster:
@@ -125,7 +136,7 @@ with open(output_file, "w") as fileobj:
     else:  # Cauer network, as default
         for i in range(stages):
             tmpstring = "C" + str(i+1) + " " + str(i+1) + " " + \
-                        "T_Ambient " + str(c_list[i]) + "\n"
+                        "0 " + str(c_list[i]) + "\n"
             fileobj.write(tmpstring)
             tmpstring = "R" + str(i+1) + " " + str(i+1) + " " + \
                         str(i+2) + " " + str(r_list[i]) + "\n"
